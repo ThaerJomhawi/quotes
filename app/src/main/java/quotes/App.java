@@ -5,8 +5,7 @@ package quotes;
 
 
 
-import java.io.FileReader;
-
+import java.io.*;
 import com.google.gson.Gson;
 
 
@@ -16,9 +15,12 @@ public class App {
 
     public static void main(String[] args) {
 
-        String path ="C:\\Users\\user\\Desktop\\code401\\quotes\\app\\src\\main\\resources\\quotes.json";
-        getQuote(path);
+            String path ="C:\\Users\\user\\Desktop\\code401\\quotes\\app\\src\\main\\resources\\quotes.json";
+            getQuote(path);
+
     }
+
+
 
     public static void getQuote(String path){
         // create Gson instance
@@ -31,9 +33,6 @@ public class App {
             int randomQuote = (int)(Math.random() * quotes.length);
             System.out.println(quotes[randomQuote]);
 
-//            for (int i = 0; i < quotes.length; i++){
-//                System.out.println(quotes[i]);
-//            }
 
             // close reader
             fileReader.close();
@@ -43,6 +42,8 @@ public class App {
 
 
     }
+
+
 
 
 
