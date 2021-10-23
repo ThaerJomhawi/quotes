@@ -6,6 +6,13 @@ package quotes;
 
 
 import java.io.*;
+
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+
 import com.google.gson.Gson;
 
 
@@ -15,8 +22,33 @@ public class App {
 
     public static void main(String[] args) {
 
+
+        if (netIsAvailable()){
+            String url = "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
+            sendGetRequest(url);
+        }else{
             String path ="C:\\Users\\user\\Desktop\\code401\\quotes\\app\\src\\main\\resources\\quotes.json";
             getQuote(path);
+        }
+
+    }
+
+    private static boolean netIsAvailable() {
+        try {
+            final URL url = new URL("http://www.google.com");
+            final URLConnection conn = url.openConnection();
+            conn.connect();
+            conn.getInputStream().close();
+            return true;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            return false;
+        }
+
+            String path ="C:\\Users\\user\\Desktop\\code401\\quotes\\app\\src\\main\\resources\\quotes.json";
+            getQuote(path);
+
 
     }
 
@@ -43,8 +75,51 @@ public class App {
 
     }
 
+    static void sendGetRequest(String urlString){
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = setUpConnectionObject(url);
+            if(connection.getResponseCode() == 200){
+                BufferedReader in = getBufferedReaderFromConnection(connection);
+                printBufferedReaderContect(in);
+                in.close();
+            }
+        } catch (MalformedURLException e) {
+            System.out.println("Sorry, there was a problem creating the URL object,the error was:");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Sorry, there was a problem opening the connection from the URL object, the error was:");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
+    }
 
+    static HttpURLConnection setUpConnectionObject(URL url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        return connection;
+    }
+
+    static BufferedReader getBufferedReaderFromConnection(HttpURLConnection connection) throws IOException {
+        InputStream inputStream = connection.getInputStream();
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader in = new BufferedReader(inputStreamReader);
+
+        return in;
+    }
+
+    static void printBufferedReaderContect(BufferedReader in) throws IOException {
+        String line = in.readLine();
+        while(line != null){
+            System.out.println(line);
+            line = in.readLine();
+        }
+    }
 
 
 }
+
+

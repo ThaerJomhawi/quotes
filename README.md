@@ -13,11 +13,13 @@ add this statement in the build.gradle like this:
 }
 ```
 
-### To Run 
+### To Run
 
-1. Press run and the app will show the result of Quote with author Name 
+1. Press run and the app will show the result of Quote with author Name
 
 ### To Test  :
 
-1. with intelliJ by running the test. 
+1. with intelliJ by running the test.
 2. by using `./gradlew test`.
+
+
