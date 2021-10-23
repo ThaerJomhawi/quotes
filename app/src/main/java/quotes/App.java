@@ -6,10 +6,12 @@ package quotes;
 
 
 import java.io.*;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
 
 import com.google.gson.Gson;
 
@@ -19,6 +21,7 @@ import com.google.gson.Gson;
 public class App {
 
     public static void main(String[] args) {
+
 
         if (netIsAvailable()){
             String url = "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
@@ -42,7 +45,14 @@ public class App {
         } catch (IOException e) {
             return false;
         }
+
+            String path ="C:\\Users\\user\\Desktop\\code401\\quotes\\app\\src\\main\\resources\\quotes.json";
+            getQuote(path);
+
+
     }
+
+
 
     public static void getQuote(String path){
         // create Gson instance
@@ -111,3 +121,5 @@ public class App {
 
 
 }
+
+
